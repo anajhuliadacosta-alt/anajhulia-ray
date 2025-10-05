@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Presentes - Casamento Ana Jhulia & Rayenna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d4af37;
+            --secondary: #8b4513;
+            --accent: #f8e9d4;
+            --dark: #2c1810;
+            --light: #fffaf0;
+            --shadow: 0 4px 20px rgba(44, 24, 16, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to bottom, #fffaf0, #f8e9d4);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--secondary);
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: var(--secondary);
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        /* Guest View Styles */
+        #guest-view {
+            display: block;
+        }
+        
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .gift-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .gift-item:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 25px rgba(44, 24, 16, 0.2);
+        }
+        
+        .gift-image-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .gift-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gift-item:hover .gift-image {
+            transform: scale(1.05);
+        }
+        
+        .gift-details {
+            padding: 25px;
+        }
+        
+        .gift-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .gift-status {
+            display: inline-block;
+            padding: 7px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .available {
+            background-color: #e6f7ee;
+            color: #0f5132;
+            border: 1px solid #b8e0ce;
+        }
+        
+        .reserved {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f1aeb5;
+        }
+        
+        .guest-form {
+            margin-top: 15px;
+        }
+        
+        input, button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.5);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .secondary-btn {
+            background: white;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+        
+        .secondary-btn:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .switch-view {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        /* Admin View Styles */
+        #admin-view {
+            display: none;
+        }
+        
+        .password-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+        
+        .admin-panel {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .reserved-list {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #eee;
+        }
+        
+        .reservation-item {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        
+        .reservation-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .reservation-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-upload {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .file-upload-label {
+            display: block;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload-label:hover {
+            border-color: var(--primary);
+            background: #f8f4e5;
+        }
+        
+        .file-upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .upload-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .upload-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Thank You Message */
+        .thank-you-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        
+        .thank-you-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .thank-you-content {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.5s ease;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .thank-you-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            color: #777;
+        }
+        
+        .hearts {
+            color: #e91e63;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gift-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .admin-actions {
+                flex-direction: column;
+            }
+            
+            .admin-panel, .password-form {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gift-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            header {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Nossa Lista de Presentes</h1>
+            <p>Com amor, Ana Jhulia & Rayenna</p>
+        </header>
+        
+        <!-- Guest View -->
+        <div id="guest-view">
+            <h2>Escolha um Presente Especial</h2>
+            <p>Clique em um presente disponível, digite seu nome e reserve para nós. Obrigada pelo carinho!</p>
+            
+            <div id="gift-list" class="gift-grid">
+                <!-- Gift items will be dynamically generated -->
+            </div>
+            
+            <div class="switch-view">
+                <button onclick="showAdminView()">Acesso Administrativo</button>
+            </div>
+        </div>
+        
+        <!-- Admin View -->
+        <div id="admin-view">
+            <div class="password-form" id="password-form">
+                <h3>Acesso Administrativo</h3>
+                <p>Digite a senha para acessar o painel de administração</p>
+                <input type="password" id="admin-password" placeholder="Senha">
+                <button onclick="checkAdminPassword()">Acessar</button>
+            </div>
+            
+            <div class="admin-panel" id="admin-panel" style="display: none;">
+                <h2>Painel de Administração</h2>
+                
+                <div class="admin-actions">
+                    <button onclick="showAddGiftForm()">Adicionar Presente</button>
+                    <button onclick="loadReservedGifts()">Ver Reservados</button>
+                    <button onclick="showGuestView()" class="secondary-btn">Voltar para Visualização</button>
+                </div>
+                
+                <div id="add-gift-form" style="display: none;">
+                    <h3>Adicionar Novo Presente</h3>
+                    <div class="form-group">
+                        <label for="new-gift-name">Nome do Presente</label>
+                        <input type="text" id="new-gift-name" placeholder="Ex: Conjunto de Panelas">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Imagem do Presente</label>
+                        <div class="file-upload">
+                            <label class="file-upload-label">
+                                <span id="file-upload-text">Clique para selecionar uma imagem ou arraste aqui</span>
+                                <input type="file" id="new-gift-image-upload" class="file-upload-input" accept="image/*">
+                            </label>
+                        </div>
+                        <div id="image-preview" class="upload-preview"></div>
+                    </div>
+                    
+                    <button onclick="addNewGift()">Adicionar Presente</button>
+                </div>
+                
+                <div id="edit-gift-form" style="display: none;">
+                    <h3>Editar Presente</h3>
+                    <input type="hidden" id="edit-gift-id">
+                    <div class="form-group">
+                        <label for="edit-gift-name">Nome do Presente</label>
+                        <input type="text" id="edit-gift-name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Imagem do Presente</label>
+                        <div class="file-upload">
+                            <label class="file-upload-label">
+                                <span id="edit-file-upload-text">Clique para selecionar uma nova imagem</span>
+                                <input type="file" id="edit-gift-image-upload" class="file-upload-input" accept="image/*">
+                            </label>
+                        </div>
+                        <div id="edit-image-preview" class="upload-preview"></div>
+                    </div>
+                    
+                    <button onclick="updateGift()">Salvar Alterações</button>
+                    <button onclick="cancelEdit()" class="secondary-btn">Cancelar</button>
+                </div>
+                
+                <div id="reserved-gifts" style="display: none;">
+                    <h3>Presentes Reservados</h3>
+                    <div id="reserved-list" class="reserved-list">
+                        <!-- Reserved gifts will be listed here -->
+                    </div>
+                </div>
+                
+                <h3>Todos os Presentes</h3>
+                <div id="admin-gift-list" class="gift-grid">
+                    <!-- Admin gift items will be dynamically generated -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Thank You Modal -->
+        <div class="thank-you-modal" id="thank-you-modal">
+            <div class="thank-you-content">
+                <h2>Obrigada!</h2>
+                <p>Sua reserva foi confirmada com sucesso.</p>
+                <p>Agradecemos muito por fazer parte do nosso dia especial!</p>
+                <button onclick="closeThankYou()">Fechar</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Obrigada por fazer parte da nossa história <span class="hearts">♥</span></p>
+    </footer>
+
+    <script>
+        // Initialize gift list with the provided items
+        let gifts = [
+            { id: 1, name: "Pratos orgânicos", image: "https://source.unsplash.com/400x300/?organic-plate", available: true, reservedBy: "" },
+            { id: 2, name: "Açúcar", image: "https://source.unsplash.com/400x300/?sugar-bowl", available: true, reservedBy: "" },
+            { id: 3, name: "AIRFRYER", image: "https://source.unsplash.com/400x300/?airfryer", available: true, reservedBy: "" },
+            { id: 4, name: "Liquidificador", image: "https://source.unsplash.com/400x300/?blender", available: true, reservedBy: "" },
+            { id: 5, name: "Panela elétrica", image: "https://source.unsplash.com/400x300/?electric-pot", available: true, reservedBy: "" },
+            { id: 6, name: "Microondas", image: "https://source.unsplash.com/400x300/?microwave", available: true, reservedBy: "" },
+            { id: 7, name: "Panela de pressão elétrica", image: "https://source.unsplash.com/400x300/?pressure-cooker", available: true, reservedBy: "" },
+            { id: 8, name: "Conjunto de panelas", image: "https://source.unsplash.com/400x300/?pot-set", available: true, reservedBy: "" },
+            { id: 9, name: "Panela de pressão", image: "https://source.unsplash.com/400x300/?pressure-cooker", available: true, reservedBy: "" },
+            { id: 10, name: "Frigideira antiaderente", image: "https://source.unsplash.com/400x300/?frying-pan", available: true, reservedBy: "" },
+            { id: 11, name: "Assadeiras (vidro, alumínio e/ou cerâmica)", image: "https://source.unsplash.com/400x300/?baking-tray", available: true, reservedBy: "" },
+            { id: 12, name: "Jogo de talheres", image: "https://source.unsplash.com/400x300/?cutlery", available: true, reservedBy: "" },
+            { id: 13, name: "Conjunto de facas", image: "https://source.unsplash.com/400x300/?knives", available: true, reservedBy: "" },
+            { id: 14, name: "Escorredor de macarrão", image: "https://source.unsplash.com/400x300/?pasta-strainer", available: true, reservedBy: "" },
+            { id: 15, name: "Espremedor de alho", image: "https://source.unsplash.com/400x300/?garlic-press", available: true, reservedBy: "" }
+        ];
+        
+        const ADMIN_PASSWORD = "admin123"; // Simple password for demo purposes
+        
+        // Image handling variables
+        let currentImageFile = null;
+        let currentEditImageFile = null;
+        
+        // Load gifts from localStorage if available
+        function loadGifts() {
+            const savedGifts = localStorage.getItem('weddingGifts');
+            if (savedGifts) {
+                gifts = JSON.parse(savedGifts);
+            }
+            renderGuestGifts();
+            
+            // Set up file upload handlers
+            setupFileUpload();
+        }
+        
+        // Set up file upload functionality
+        function setupFileUpload() {
+            const fileInput = document.getElementById('new-gift-image-upload');
+            const editFileInput = document.getElementById('edit-gift-image-upload');
+            const fileUploadText = document.getElementById('file-upload-text');
+            const editFileUploadText = document.getElementById('edit-file-upload-text');
+            const preview = document.getElementById('image-preview');
+            const editPreview = document.getElementById('edit-image-preview');
+            
+            fileInput.addEventListener('change', function(e) {
+                handleFileSelect(e, preview, fileUploadText);
+            });
+            
+            editFileInput.addEventListener('change', function(e) {
+                handleFileSelect(e, editPreview, editFileUploadText, true);
+            });
+            
+            // Drag and drop functionality
+            const dropArea = document.querySelector('.file-upload-label');
+            if (dropArea) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, preventDefaults, false);
+                });
+                
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
+                dropArea.addEventListener('drop', handleDrop, false);
+                
+                function handleDrop(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    fileInput.files = files;
+                    handleFileSelect({target: fileInput}, preview, fileUploadText);
+                }
+            }
+        }
+        
+        // Handle file selection for upload
+        function handleFileSelect(event, previewElement, textElement, isEdit = false) {
+            const files = event.target.files;
+            
+            if (files.length > 0) {
+                const file = files[0];
+                
+                if (file.type.match('image.*')) {
+                    textElement.textContent = file.name;
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewElement.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        previewElement.appendChild(img);
+                        
+                        if (isEdit) {
+                            currentEditImageFile = {
+                                name: file.name,
+                                data: e.target.result
+                            };
+                        } else {
+                            currentImageFile = {
+                                name: file.name,
+                                data: e.target.result
+                            };
+                        }
+                    }
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Por favor, selecione apenas arquivos de imagem.');
+                    event.target.value = '';
+                }
+            }
+        }
+        
+        // Save gifts to localStorage
+        function saveGifts() {
+            localStorage.setItem('weddingGifts', JSON.stringify(gifts));
+        }
+        
+        // Render gifts for guest view
+        function renderGuestGifts() {
+            const giftList = document.getElementById('gift-list');
+            giftList.innerHTML = '';
+            
+            gifts.forEach(gift => {
+                const giftElement = document.createElement('div');
+                giftElement.className = 'gift-item';
+                
+                giftElement.innerHTML = `
+                    <div class="gift-image-container">
+                        <img src="${gift.image}" alt="${gift.name}" class="gift-image">
+                    </div>
+                    <div class="gift-details">
+                        <div class="gift-name">${gift.name}</div>
+                        <div class="gift-status ${gift.available ? 'available' : 'reserved'}">
+                            ${gift.available ? 'Disponível' : 'Reservado'}
+                        </div>
+                        ${gift.available ? `
+                            <div class="guest-form">
+                                <input type="text" id="guest-name-${gift.id}" placeholder="Seu nome">
+                                <button onclick="reserveGift(${gift.id})">Reservar Presente</button>
+                            </div>
+                        ` : `
+                            <p>Reservado por: ${gift.reservedBy}</p>
+                        `}
+                    </div>
+                `;
+                
+                giftList.appendChild(giftElement);
+            });
+        }
+        
+        // Render gifts for admin view
+        function renderAdminGifts() {
+            const adminGiftList = document.getElementById('admin-gift-list');
+            adminGiftList.innerHTML = '';
+            
+            gifts.forEach(gift => {
+                const giftElement = document.createElement('div');
+                giftElement.className = 'gift-item';
+                
+                giftElement.innerHTML = `
+                    <div class="gift-image-container">
+                        <img src="${gift.image}" alt="${gift.name}" class="gift-image">
+                    </div>
+                    <div class="gift-details">
+                        <div class="gift-name">${gift.name}</div>
+                        <div class="gift-status ${gift.available ? 'available' : 'reserved'}">
+                            ${gift.available ? 'Disponível' : `Reservado por: ${gift.reservedBy}`}
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <button onclick="editGift(${gift.id})">Editar</button>
+                            <button onclick="deleteGift(${gift.id})" class="secondary-btn">Remover</button>
+                            ${!gift.available ? `<button onclick="releaseGift(${gift.id})">Liberar</button>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                adminGiftList.appendChild(giftElement);
+            });
+        }
+        
+        // Reserve a gift
+        function reserveGift(giftId) {
+            const guestNameInput = document.getElementById(`guest-name-${giftId}`);
+            const guestName = guestNameInput.value.trim();
+            
+            if (!guestName) {
+                alert('Por favor, digite seu nome para reservar o presente.');
+                return;
+            }
+            
+            const giftIndex = gifts.findIndex(g => g.id === giftId);
+            if (giftIndex !== -1 && gifts[giftIndex].available) {
+                gifts[giftIndex].available = false;
+                gifts[giftIndex].reservedBy = guestName;
+                saveGifts();
+                renderGuestGifts();
+                
+                // Show thank you message
+                document.getElementById('thank-you-modal').classList.add('active');
+            }
+        }
+        
+        // Show admin view
+        function showAdminView() {
+            document.getElementById('guest-view').style.display = 'none';
+            document.getElementById('admin-view').style.display = 'block';
+        }
+        
+        // Show guest view
+        function showGuestView() {
+            document.getElementById('admin-view').style.display = 'none';
+            document.getElementById('guest-view').style.display = 'block';
+            document.getElementById('password-form').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+        
+        // Check admin password
+        function checkAdminPassword() {
+            const password = document.getElementById('admin-password').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('password-form').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                renderAdminGifts();
+                
+                // Hide all forms initially
+                document.getElementById('add-gift-form').style.display = 'none';
+                document.getElementById('edit-gift-form').style.display = 'none';
+                document.getElementById('reserved-gifts').style.display = 'none';
+            } else {
+                alert('Senha incorreta. Tente novamente.');
+            }
+        }
+        
+        // Show add gift form
+        function showAddGiftForm() {
+            document.getElementById('add-gift-form').style.display = 'block';
+            document.getElementById('edit-gift-form').style.display = 'none';
+            document.getElementById('reserved-gifts').style.display = 'none';
+            
+            // Clear form
+            document.getElementById('new-gift-name').value = '';
+            document.getElementById('file-upload-text').textContent = 'Clique para selecionar uma imagem ou arraste aqui';
+            document.getElementById('image-preview').innerHTML = '';
+            currentImageFile = null;
+        }
+        
+        // Add new gift
+        function addNewGift() {
+            const name = document.getElementById('new-gift-name').value.trim();
+            
+            if (!name) {
+                alert('Por favor, digite o nome do presente.');
+                return;
+            }
+            
+            const newId = gifts.length > 0 ? Math.max(...gifts.map(g => g.id)) + 1 : 1;
+            
+            // Use uploaded image if available, otherwise use placeholder
+            let imageUrl = 'https://source.unsplash.com/400x300/?gift';
+            if (currentImageFile) {
+                imageUrl = currentImageFile.data;
+            }
+            
+            gifts.push({
+                id: newId,
+                name: name,
+                image: imageUrl,
+                available: true,
+                reservedBy: ''
+            });
+            
+            saveGifts();
+            renderAdminGifts();
+            
+            // Hide form
+            document.getElementById('add-gift-form').style.display = 'none';
+            
+            alert('Presente adicionado com sucesso!');
+        }
+        
+        // Edit gift
+        function editGift(giftId) {
+            const gift = gifts.find(g => g.id === giftId);
+            if (gift) {
+                document.getElementById('edit-gift-id').value = giftId;
+                document.getElementById('edit-gift-name').value = gift.name;
+                
+                // Show current image in preview
+                const editPreview = document.getElementById('edit-image-preview');
+                editPreview.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = gift.image;
+                editPreview.appendChild(img);
+                
+                document.getElementById('edit-file-upload-text').textContent = 'Clique para selecionar uma nova imagem';
+                currentEditImageFile = null;
+                
+                document.getElementById('add-gift-form').style.display = 'none';
+                document.getElementById('edit-gift-form').style.display = 'block';
+                document.getElementById('reserved-gifts').style.display = 'none';
+            }
+        }
+        
+        // Update gift
+        function updateGift() {
+            const giftId = parseInt(document.getElementById('edit-gift-id').value);
+            const name = document.getElementById('edit-gift-name').value.trim();
+            
+            if (!name) {
+                alert('Por favor, digite o nome do presente.');
+                return;
+            }
+            
+            const giftIndex = gifts.findIndex(g => g.id === giftId);
+            if (giftIndex !== -1) {
+                gifts[giftIndex].name = name;
+                
+                // Use new image if uploaded, otherwise keep the existing one
+                if (currentEditImageFile) {
+                    gifts[giftIndex].image = currentEditImageFile.data;
+                }
+                
+                saveGifts();
+                renderAdminGifts();
+                
+                document.getElementById('edit-gift-form').style.display = 'none';
+                alert('Presente atualizado com sucesso!');
+            }
+        }
+        
+        // Cancel edit
+        function cancelEdit() {
+            document.getElementById('edit-gift-form').style.display = 'none';
+        }
+        
+        // Delete gift
+        function deleteGift(giftId) {
+            if (confirm('Tem certeza que deseja remover este presente?')) {
+                gifts = gifts.filter(g => g.id !== giftId);
+                saveGifts();
+                renderAdminGifts();
+                alert('Presente removido com sucesso!');
+            }
+        }
+        
+        // Release gift (make it available again)
+        function releaseGift(giftId) {
+            const giftIndex = gifts.findIndex(g => g.id === giftId);
+            if (giftIndex !== -1) {
+                gifts[giftIndex].available = true;
+                gifts[giftIndex].reservedBy = '';
+                saveGifts();
+                renderAdminGifts();
+                alert('Presente liberado com sucesso!');
+            }
+        }
+        
+        // Load reserved gifts
+        function loadReservedGifts() {
+            const reservedList = document.getElementById('reserved-list');
+            reservedList.innerHTML = '';
+            
+            const reservedGifts = gifts.filter(g => !g.available);
+            
+            if (reservedGifts.length === 0) {
+                reservedList.innerHTML = '<p>Nenhum presente reservado ainda.</p>';
+            } else {
+                reservedGifts.forEach(gift => {
+                    const item = document.createElement('div');
+                    item.className = 'reservation-item';
+                    item.innerHTML = `
+                        <div>
+                            <strong>${gift.name}</strong>
+                            <p>Reservado por: ${gift.reservedBy}</p>
+                        </div>
+                        <button onclick="releaseGift(${gift.id})">Liberar</button>
+                    `;
+                    reservedList.appendChild(item);
+                });
+            }
+            
+            document.getElementById('add-gift-form').style.display = 'none';
+            document.getElementById('edit-gift-form').style.display = 'none';
+            document.getElementById('reserved-gifts').style.display = 'block';
+        }
+        
+        // Close thank you modal
+        function closeThankYou() {
+            document.getElementById('thank-you-modal').classList.remove('active');
+        }
+        
+        // Initialize the page
+        window.onload = function() {
+            loadGifts();
+        };
+    </script>
+</body>
+</html>
